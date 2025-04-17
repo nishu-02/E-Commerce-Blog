@@ -1,0 +1,1 @@
+this is my static text file in the shop app.
