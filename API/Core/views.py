@@ -11,7 +11,7 @@ def index(request):
     # nSlides = n // 4 + ceil((n / 4) - (n // 4))
     # allProds.append([products, range(1, nSlides), nSlides])
 
-    # Displaying the produccts in the categories
+    # Displaying the products in the categories
     catprods = Product.objects.values('category', 'product_id')
     cats = {item['category'] for item in catprods} # so this the set means getting the unique categories
 
@@ -24,19 +24,22 @@ def index(request):
     return render(request, 'Core/index.html', {'allProds': allProds})
 
 def contact(request):
-    return HttpResponse("This is contact page")
+    return render(request, 'Core/contact.html')
 
 def about(request):
     return render(request, 'Core/about.html')
 
 def tracker(request):
-    return HttpResponse("This is tracking page")
+    return render(request, 'Core/tracker.html')
 
-def productView(request):
-    return HttpResponse("This is product view page")
+def productView(request, id):
+    # Fetch the product using the id
+    product = Product.objects.filter(product_id=id)[0]
+    print(product)
+    return render(request, 'Core/prodview.html', {'product': product}) # inside the '' is the name by which we want to call the product
 
 def checkout(request):
-    return HttpResponse("This is checkout page")
+    return render(request, 'Core/checkout.html')
 
 def search(request):
-    return HttpResponse("This is the search page")
+    return render(request, 'Core/search.html')
