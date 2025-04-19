@@ -14,3 +14,12 @@ class Product(models.Model): # Product is the name of the table
     def __str__(self):
         return self.product_name # so when the whole list is displayed here we will choose what to show in the list (previously it was showing the object name)
      
+class Contact(models.Model):
+    msd_id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100)
+    emaik = models.CharField(max_length=100)
+    phone = models.CharField(max_length=100)
+    desc = models.CharField(max_length=5000)
+
+    def __str__(self):
+        return self.name
