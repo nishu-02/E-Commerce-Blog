@@ -6,10 +6,21 @@ from math import ceil
 # Create your views here.
 def index(request):
     allProds = []
-    products = Product.objects.all()
-    n = len(products)
-    nSlides = n // 4 + ceil((n / 4) - (n // 4))
-    allProds.append([products, range(1, nSlides), nSlides])
+    # products = Product.objects.all()
+    # n = len(products)
+    # nSlides = n // 4 + ceil((n / 4) - (n // 4))
+    # allProds.append([products, range(1, nSlides), nSlides])
+
+    # Displaying the produccts in the categories
+    catprods = Product.objects.values('category', 'product_id')
+    cats = {item['category'] for item in catprods} # so this the set means getting the unique categories
+
+    for cat in cats:
+        prod = Product.objects.filter(category=cat)
+        n = len(prod)
+        nSlides = n // 4 + ceil((n / 4) - (n // 4))
+        allProds.append([prod, range(1, nSlides), nSlides])
+
     return render(request, 'Core/index.html', {'allProds': allProds})
 
 def contact(request):
