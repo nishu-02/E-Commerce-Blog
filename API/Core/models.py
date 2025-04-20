@@ -36,3 +36,12 @@ class Order(models.Model):
 
     def __str__(self):
         return self.name
+
+class OrderUpdate(models.Model):
+    update_id = models.AutoField(primary_key=True)
+    order_id = models.IntegerField(default="")
+    update_desc = models.CharField(max_length=5000)
+    timestamp = models.DateField(auto_now=True) # auto_now is used to set the field to now every time the object is saved
+
+    def __str__(self):
+        return self.update_desc[0:7] + "..." # so this will return the first 7 characters of the update_desc
