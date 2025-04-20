@@ -25,6 +25,7 @@ def index(request):
     return render(request, 'Core/index.html', {'allProds': allProds})
 
 def contact(request):
+    thank = False
 
     if request.method == "POST":
         name = request.POST.get('name')
@@ -36,8 +37,9 @@ def contact(request):
         # Save the data to the database or send an email
         contact = Contact(name=name, email=email, phone=phone, desc=desc)
         contact.save() # saving the data to the database
+        thank = True
 
-    return render(request, 'Core/contact.html')
+    return render(request, 'Core/contact.html', {'thank': thank})
 
 def about(request):
     return render(request, 'Core/about.html')
@@ -55,7 +57,7 @@ def tracker(request):
                 updates = []
                 for item in update:
                     updates.append({ 'text': item.update_desc, 'time': item.timestamp})
-                    response = json.dumps(updates, default=str) # converting the updates to json format or to make it serializable
+                    response = json.dumps(updates, order[0].items_json, default=str) # converting the updates to json format or to make it serializable
                 return HttpResponse(response)
             else:
                 return HttpResponse('{"status":"noitem"}') # if the order is not found
