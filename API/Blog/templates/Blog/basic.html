@@ -12,7 +12,6 @@
      <style>
        {% block css %} {% endblock %}
   </style>
-  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v3.2"></script>
   </head>
   <body>
 
@@ -24,8 +23,11 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
+      <li class="nav-item active">
         <a class="nav-link" href="/shop">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/blog">Blog</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/shop/about">About Us</a>
@@ -35,11 +37,7 @@
         <a class="nav-link" href="/shop/tracker">Tracker</a>
       </li>
 
-      <li class="nav-item active">
-        <a class="nav-link" href="/blog">Blog</a>
-      </li>
-
-       <li class="nav-item">
+      <li class="nav-item">
         <a class="nav-link" href="/shop/contact">Contact Us</a>
       </li>
 
