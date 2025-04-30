@@ -32,6 +32,7 @@ class Order(models.Model):
     address = models.CharField(max_length=100)
     city = models.CharField(max_length=100)
     state = models.CharField(max_length=100)
+    phone = models.CharField(max_length=15)
     zip_code = models.CharField(max_length=100)
 
     def __str__(self):

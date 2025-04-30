@@ -78,7 +78,7 @@ def checkout(request):
     if request.method == "POST":
         name = request.POST.get('name')
         email = request.POST.get('email')
-        address = request.POST.get('address')
+        address=request.POST.get('address1', '') + " " + request.POST.get('address2', '')
         city = request.POST.get('city')
         state = request.POST.get('state')
         zip_code = request.POST.get('zip_code')
@@ -86,13 +86,36 @@ def checkout(request):
 
         order = Order(name=name, email=email, address=address, city=city, state=state, zip_code=zip_code, phone=phone)
         order.save() # Save the order to the database or send an email
-        update = OrderUpdate(order_id = ordeer.order_id, update_desc="The order has been placed")
+        update = OrderUpdate(order_id = order.order_id, update_desc="The order has been placed")
         update.save()
         thank = True
         id = order.order_id
         return render(request, 'Core/checkout.html', {'thank': thank, 'id': id}) # thank is a boolean variable to show the thank you message
 
-    # return render(request, 'Core/checkout.html')
+    return render(request, 'Core/checkout.html')
+
+def searchMatch(query, item):
+    if(query in item.product_name or query in item.category):
+        return True
+    else: 
+        return False
 
 def search(request):
-    return render(request, 'Core/search.html')
+    query = request.GET.get('search')
+    allProds = []
+    catprods = Product.objects.values('category', 'id')
+    cats = { item['category'] for item in catprods }
+    for cat in cats:
+        prodtemp = Product.objects.filter(category=cat)
+        prod = [item for item in prodtemp if searchMatch(query, item)]
+
+        n = len(prod)
+        nSlides = n // 4 + ceil((n/4)-(n//4))
+
+        if len(prod) != 0:
+            allProds.append([prod, range(1, nSlides), nSlides])
+        
+        params = { 'allProds': allProds, "msg": ""}
+        if len(allProds) == 0 or len(query)<4:
+            params = {'msg': "Please make sure to enter the relevant search query"}
+    return render(request, 'Core/search.html', params)
